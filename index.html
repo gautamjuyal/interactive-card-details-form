@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- displays site properly based on user's device -->
+
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+    <link rel="stylesheet" href="sass/main.css">
+
+    <script defer src="app.js"></script>
+
+    <title>Frontend Mentor | Interactive card details form</title>
+
+    <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+    <style>
+        .attribution {
+            font-size: 11px;
+            text-align: center;
+        }
+        
+        .attribution a {
+            color: hsl(228, 45%, 44%);
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="container">
+
+        <div class="img-section">
+
+            <div class="card-dummy">
+
+                <img src="images/card-logo.svg" alt="avatar">
+
+
+
+                <div class="card-text">
+                    <h1 id="dummy-card-number">0000 0000 0000 0000</h1>
+                    <div class="name-exp">
+                        <span id="dummy-card-name">Jane Appleseed</span>
+                        <span id="dummy-card-exp"><span>00</span>/<span>00</span></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card-back">
+                <img src="images/bg-card-back.png" alt="card-back">
+                <p id="dummy-card-cvc">000</p>
+            </div>
+
+
+
+
+        </div>
+
+        <div class="form-section">
+
+
+
+            <div class="complete-state">
+                <img src="images/icon-complete.svg" alt="complete">
+
+                <h1>Thank you!</h1>
+                <p>We've added your card details </p>
+                <button type="button" class="btns" id="continue-btn">Continue</button>
+            </div>
+
+
+
+            <div class="form">
+
+                <div class="input-field">
+                    <label>Cardholder Name</label>
+                    <input type="text" placeholder="e.g. Jane Appleseed" id="inputFieldName">
+                </div>
+
+
+                <div class="input-field">
+                    <label>Card Number</label>
+                    <input type="text" placeholder="e.g. 1234 5678 9123 0000" maxlength="16" id="inputFieldCardNumber">
+                </div>
+
+                <div class="small-input-fields">
+
+                    <div class="input-field small">
+                        <label>Exp. Date (MM/YY)</label>
+                        <span>
+                        <input type="number" placeholder="MM" min="1" max="12"maxlength="2" id="inputFieldMonth">
+                        <input type="number" placeholder="YY" min="22" max="99" maxlength="2" id="inputFieldYear">
+                        </span>
+
+                    </div>
+
+
+                    <div class="input-field small"><label>CVC</label>
+                        <input type="number" placeholder="e.g. 123" maxlength="3" id="inputFieldCvc">
+                    </div>
+
+                </div>
+
+
+
+
+                <button type="submit" id="confirm-btn" class="btns">Confirm</button>
+
+            </div>
+        </div>
+
+
+    </main>
+
+
+
+
+
+    <div class="attribution">
+        Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. Coded by <a href="https://www.github.com/gautamjuyal">Gautam Juyal</a>.
+    </div>
+</body>
+
+</html>
