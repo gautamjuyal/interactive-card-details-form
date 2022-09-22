@@ -26,19 +26,27 @@ const originalForm = document.querySelector('.form');
 //functions
 
 function changeDummyCardContent(dummyElement, formField) {
-    formField.addEventListener('change', event => {
+    formField.addEventListener('keyup', event => {
         let retVal;
         // let newString;
+        if (formField === inputFieldCardNumber) {
+            if (formField.value.length === 4 ||
+                formField.value.length === 9 ||
+                formField.value.length === 14)
+                formField.value = formField.value.concat(' ')
+        }
         if (dummyElement === dummyCardNumber) {
-            if (formField.value.length < 16)
-                retVal = formField.value + ('0'.repeat(16 - formField.value.length));
-            else if (formField.value.length > dummyElement.textContent.length)
-                retVal = formField.value.trim().substring(0, 15);
+            if (formField.value.trim().length < 16) {
+                retVal = formField.value + ('0'.repeat(16 - formField.value.trim().length));
+                // retVal = retVal.slice(0, 4) + ' ' + retVal.slice(4, 8) + ' ' + retVal.slice(8, 12) + ' ' + retVal.slice(12);
+            }
+            // else if (formField.value.length > dummyElement.textContent.length)
+            //     retVal = formField.value.trim().substring(0, 18);
             else if (isNaN(parseInt(formField.value)))
-                retVal = '0000000000000000'
+                retVal = '0000 0000 0000 0000'
             else
                 retVal = formField.value;
-            retVal = retVal.slice(0, 4) + ' ' + retVal.slice(4, 8) + ' ' + retVal.slice(8, 12) + ' ' + retVal.slice(12);
+            // retVal = retVal.slice(0, 4) + ' ' + retVal.slice(4, 8) + ' ' + retVal.slice(8, 12) + ' ' + retVal.slice(12);
         } else
             retVal = formField.value;
         dummyElement.textContent = retVal;
@@ -46,8 +54,14 @@ function changeDummyCardContent(dummyElement, formField) {
 }
 
 function throwError(field, string) {
-    if (field.parentElement.querySelector('p')) {
-        field.parentElement.querySelector('p').textContent = string;
+    if (!field.classList.contains('error'))
+        field.classList.add('error');
+    if (field === inputFieldMonth || field === inputFieldYear) {
+        if (field.closest('div').querySelector('p'))
+            return;
+    }
+    if (field.closest('div').querySelector('p')) {
+        field.closest('div').querySelector('p').textContent = string;
         return;
     }
 
@@ -60,8 +74,8 @@ function throwError(field, string) {
 
 function removeError(field) {
     field.classList.remove('error');
-    if (field.parentElement.querySelector('p'))
-        field.parentElement.removeChild(field.parentElement.querySelector('p'));
+    if (field.closest('div').querySelector('p'))
+        field.closest('div').removeChild(field.closest('div').querySelector('p'));
 }
 
 function checkValidity(field) {
@@ -77,20 +91,25 @@ function checkValidity(field) {
     }
 }
 
+function checkValidity2(field1, field2) {
+    if ((field1.value.trim() === '' & field2.value.trim() === '')) {
+        throwError(field1, "Can't be blank");
+        throwError(field2);
+        return false;
+    } else {
+        removeError(field1);
+        removeError(field2);
+        return true;
+    }
+}
+
 function confirmBtnHandler(event) {
     event.preventDefault();
     let validInputs;
     validInputs = checkValidity(inputFieldName) &
         checkValidity(inputFieldCardNumber) &
         checkValidity(inputFieldCvc) &
-        checkValidity(inputFieldMonth) &
-        checkValidity(inputFieldYear);
-
-    console.log(checkValidity(inputFieldName),
-        checkValidity(inputFieldCardNumber),
-        checkValidity(inputFieldCvc),
-        checkValidity(inputFieldMonth),
-        checkValidity(inputFieldYear))
+        checkValidity2(inputFieldMonth, inputFieldYear);
 
     console.log(validInputs)
     if (validInputs) {
@@ -104,6 +123,15 @@ function confirmBtnHandler(event) {
 function clearInputs() {
     for (const input of document.querySelectorAll('input'))
         input.value = '';
+}
+
+function restoreDefaults() {
+    for (const input of document.querySelectorAll('input')) {
+        input.addEventListener('keyup', function() {
+            if (input.value.trim().length < 1)
+                resetDummyCard();
+        })
+    }
 }
 
 function resetDummyCard() {
@@ -128,6 +156,8 @@ changeDummyCardContent(dummyCardNumber, inputFieldCardNumber)
 changeDummyCardContent(dummyCardMonth, inputFieldMonth)
 changeDummyCardContent(dummyCardYear, inputFieldYear)
 changeDummyCardContent(dummyCardCvc, inputFieldCvc)
+
+restoreDefaults();
 
 confirmBtn.addEventListener('click', confirmBtnHandler);
 
