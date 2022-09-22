@@ -148,17 +148,22 @@ function restoreDefaults() {
     for (const input of document.querySelectorAll('input')) {
         input.addEventListener('keyup', function() {
             if (input.value.trim().length < 1)
-                resetDummyCard();
+                resetDummyCard(input);
         })
     }
 }
 
-function resetDummyCard() {
-    dummyCardName.textContent = 'Jane Appleseed';
-    dummyCardNumber.textContent = '0000 0000 0000 0000';
-    dummyCardCvc.textContent = '000';
-    dummyCardMonth.textContent = '00';
-    dummyCardYear.textContent = '00';
+function resetDummyCard(field) {
+    if (field === inputFieldName)
+        dummyCardName.textContent = 'Jane Appleseed';
+    if (field === inputFieldCardNumber)
+        dummyCardNumber.textContent = '0000 0000 0000 0000';
+    if (field === inputFieldCvc)
+        dummyCardCvc.textContent = '000';
+    if (field === inputFieldMonth)
+        dummyCardMonth.textContent = '00';
+    if (field === inputFieldYear)
+        dummyCardYear.textContent = '00';
 }
 
 function continueBtnHandler() {
