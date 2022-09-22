@@ -56,11 +56,12 @@ function changeDummyCardContent(dummyElement, formField) {
 function throwError(field, string) {
     if (!field.classList.contains('error'))
         field.classList.add('error');
+    // if (string === '')
+    //     return;
     if (field === inputFieldMonth || field === inputFieldYear) {
         if (field.closest('div').querySelector('p'))
             return;
-    }
-    if (field.closest('div').querySelector('p')) {
+    } else if (field.closest('div').querySelector('p')) {
         field.closest('div').querySelector('p').textContent = string;
         return;
     }
@@ -72,10 +73,20 @@ function throwError(field, string) {
     field.closest('div').appendChild(p);
 }
 
+// function throwError2(field1, field2){
+
+// }
+
 function removeError(field) {
-    field.classList.remove('error');
-    if (field.closest('div').querySelector('p'))
+    removeError2(field);
+    if (field.closest('div').querySelector('p')) {
+        // if (field === inputFieldMonth || field === inputFieldYear)
         field.closest('div').removeChild(field.closest('div').querySelector('p'));
+    }
+}
+
+function removeError2(field) {
+    field.classList.remove('error');
 }
 
 function checkValidity(field) {
@@ -92,7 +103,15 @@ function checkValidity(field) {
 }
 
 function checkValidity2(field1, field2) {
-    if ((field1.value.trim() === '' & field2.value.trim() === '')) {
+    if (field1.value.trim() === '' & !(field2.value.trim() === '')) {
+        throwError(field1, "Can't be blank");
+        removeError2(field2);
+        return false;
+    } else if (!(field1.value.trim() === '') & field2.value.trim() === '') {
+        throwError(field2, "Can't be blank");
+        removeError2(field1);
+        return false;
+    } else if (field1.value.trim() === '' & field2.value.trim() === '') {
         throwError(field1, "Can't be blank");
         throwError(field2);
         return false;
